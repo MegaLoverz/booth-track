@@ -81,7 +81,7 @@
       localStorage.setItem("bu", bu);
 
       // ส่งไป backend
-      const res = await fetch("http://localhost:3000/record", {
+      const res = await fetch("https://booth-api.onrender.com/record", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, bu, boothID })
@@ -99,4 +99,5 @@
     });
   </script>
 </body>
+
 </html>
