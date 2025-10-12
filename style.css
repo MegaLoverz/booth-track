@@ -1,0 +1,24 @@
+.email-input-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.email-input-group input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px 0 0 6px;
+  border: 1px solid #ccc;
+  width: 60%;
+}
+
+.email-domain {
+  background-color: #eee;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  color: #555;
+}
