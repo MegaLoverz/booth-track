@@ -12,7 +12,7 @@ window.onload = () => {
   fetch("https://booth-api.onrender.com/record", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, boothID: booth })
+    body: JSON.stringify({ email, boothID })
   })
     .then(res => res.json())
     .then(data => {
@@ -27,4 +27,5 @@ window.onload = () => {
     .catch(() => {
       document.getElementById("status").innerText = "❌ Failed to connect to server.";
     });
+
 };
