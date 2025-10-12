@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sawasdee AI Booth Check-in</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Sawasdee AI Conference 2025</h1>
+    <p>Please check in with your Unilever email before visiting booths.</p>
+
+    <div id="checkin-section">
+      <input type="email" id="email" placeholder="Enter your Unilever email" />
+      <button onclick="saveEmail()">Check In</button>
+    </div>
+
+    <div id="booth-section" style="display:none;">
+      <h2>Select Booth You Visited</h2>
+      <select id="booth">
+        <option value="">-- Choose Booth --</option>
+        <option value="Microsoft">Microsoft</option>
+        <option value="AI Upskilling">AI Upskilling</option>
+        <option value="UNA">UNA</option>
+        <option value="AI Photo booth">AI Photo booth</option>
+        <option value="Dove BeauTech AI Lab">Dove BeauTech AI Lab</option>
+      </select>
+      <button onclick="submitBooth()">Submit Booth</button>
+      <p id="status"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
