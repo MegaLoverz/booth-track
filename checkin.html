@@ -1,7 +1,48 @@
-<div class="email-input-group">
-  <input type="text" id="emailPrefix" placeholder="Enter your Unilever ID" />
-  <span class="email-domain">@unilever.com</span>
-</div>
-<button onclick="saveEmail()">Check In</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sawasdee AI Check-in</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <img src="unilever-logo.png" alt="Unilever" class="logo" />
 
-<p id="previewEmail"></p>
+    <h1>WELCOME TO THE SAWASDEE AI CONFERENCE 2025!</h1>
+    <p class="subtitle">Congratulations! Sign up to participate and visit each booth to enter our lucky draw.</p>
+
+    <div class="checkin-box">
+      <label for="emailPrefix">Check-in here</label>
+      <div class="email-input-group">
+        <input type="text" id="emailPrefix" placeholder="Your Unilever ID" />
+        <span class="email-domain">@unilever.com</span>
+      </div>
+      <button onclick="saveEmail()">Check In</button>
+    </div>
+
+    <div class="promo">
+      <div class="gift-box">
+        <h2>🎁 Early Birds Lucky Draw</h2>
+        <p>Sleek gadgets, gift cards, and delightful surprises!</p>
+      </div>
+      <p class="eligibility">Visit at least two booths to be eligible for a lucky draw!</p>
+      <p class="hurry">⚡ Hurry!! Seats are filling fast and clock is ticking! ⚡</p>
+    </div>
+  </div>
+
+  <script>
+    function saveEmail() {
+      const prefix = document.getElementById("emailPrefix").value.trim();
+      if (!prefix || prefix.length < 3) {
+        alert("Please enter a valid Unilever ID.");
+        return;
+      }
+      const email = prefix + "@unilever.com";
+      localStorage.setItem("userEmail", email);
+      alert("✅ Check-in successful! You can now scan booth QR codes.");
+    }
+  </script>
+</body>
+</html>
