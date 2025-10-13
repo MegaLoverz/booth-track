@@ -88,7 +88,9 @@
       <p id="resetStatus" style="margin-top: 1rem; font-weight: bold;"></p>
     </div>
   </div>
-
+let checkinData = [];
+let boothLogData = [];
+let luckyData = [];
 <script>
   // ✅ ฟังก์ชันแปลง timestamp จาก UTC → เวลาไทย
   function convertToThaiTime(utcString) {
@@ -102,6 +104,8 @@
   async function loadCheckins() {
   const res = await fetch("https://booth-api.onrender.com/admin/checkins");
   const data = await res.json();
+  checkinData = data; // ✅ เก็บไว้ใช้ export
+
   const tbody = document.querySelector("#checkinTable tbody");
   tbody.innerHTML = "";
 
@@ -209,6 +213,7 @@ function exportLuckyCSV() {
 </body>
 
 </html>
+
 
 
 
