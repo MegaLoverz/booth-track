@@ -88,10 +88,11 @@
       <p id="resetStatus" style="margin-top: 1rem; font-weight: bold;"></p>
     </div>
   </div>
+
+<script>
 let checkinData = [];
 let boothLogData = [];
 let luckyData = [];
-<script>
   // ✅ ฟังก์ชันแปลง timestamp จาก UTC → เวลาไทย
 function convertToThaiTime(raw) {
   // ลองแปลง timestamp ด้วย Date.parse()
@@ -122,35 +123,39 @@ function convertToThaiTime(raw) {
 }
   
   async function loadLogs() {
-    const res = await fetch("https://booth-api.onrender.com/admin/logs");
-    const data = await res.json();
-    const tbody = document.querySelector("#logTable tbody");
-    tbody.innerHTML = "";
+  const res = await fetch("https://booth-api.onrender.com/admin/logs");
+  const data = await res.json();
+  boothLogData = data; // ✅ เก็บไว้ใช้ export
 
-    data.forEach(row => {
-      const thaiTime = convertToThaiTime(row.timestamp);
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${row.email}</td>
-        <td>${row.booth}</td>
-        <td>${thaiTime}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
+  const tbody = document.querySelector("#logTable tbody");
+  tbody.innerHTML = "";
 
-  async function loadLucky() {
-    const res = await fetch("https://booth-api.onrender.com/admin/lucky");
-    const data = await res.json();
-    const tbody = document.querySelector("#luckyTable tbody");
-    tbody.innerHTML = "";
+  data.forEach(row => {
+    const thaiTime = convertToThaiTime(row.timestamp);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${row.email}</td>
+      <td>${row.booth}</td>
+      <td>${thaiTime}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${row.email}</td>`;
-      tbody.appendChild(tr);
-    });
-  }
+async function loadLucky() {
+  const res = await fetch("https://booth-api.onrender.com/admin/lucky");
+  const data = await res.json();
+  luckyData = data; // ✅ เก็บไว้ใช้ export
+
+  const tbody = document.querySelector("#luckyTable tbody");
+  tbody.innerHTML = "";
+
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${row.email}</td>`;
+    tbody.appendChild(tr);
+  });
+}
 
   async function resetDatabase() {
     const confirmReset = confirm("Are you sure you want to reset all booth logs and lucky draw data?");
@@ -217,6 +222,7 @@ function exportLuckyCSV() {
 </body>
 
 </html>
+
 
 
 
