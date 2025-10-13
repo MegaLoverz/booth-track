@@ -138,13 +138,14 @@ button {
 .main-title span {
   display: block;
   font-weight: bold;
-  background: linear-gradient(to right, #2b2b8f, #9900cc);
+  background: linear-gradient(to right, #00bfff, #6a5acd, #2b2b8f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: clamp(1.6rem, 5vw, 2.2rem);
 }
 
 }
+
 
 
 
