@@ -14,16 +14,14 @@
     <div class="spacer"></div>
 
     <div class="checkin-box">
-      <label for="emailDisplay">Sign In</label>
       <div class="email-input-group">
         <input type="text" id="emailDisplay" disabled />
       </div>
-      <button onclick="submitBooth()">Check In</button>
+      <button onclick="submitBooth()">Get Stamped</button>
     </div>
 
     <div class="promo">
       <p class="eligibility">Visit at least two booths to be eligible for a lucky draw!</p>
-      <p class="hurry">⚡ Hurry!! Clock is ticking! ⚡</p>
     </div>
 
     <p id="status" style="margin-top: 2rem; font-weight: bold;"></p>
@@ -33,7 +31,7 @@
     window.onload = () => {
       const email = localStorage.getItem("userEmail");
       const urlParams = new URLSearchParams(window.location.search);
-      const booth = urlParams.get("booth");
+      const booth = urlParams.get("booth") || "Booth";
 
       if (!email || !booth) {
         document.getElementById("status").innerText = "❌ Missing email or booth info.";
@@ -72,4 +70,5 @@
   </script>
 </body>
 </html>
+
 
