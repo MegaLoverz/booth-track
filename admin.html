@@ -53,6 +53,8 @@
 
     <div class="section">
       <h2>Booth Logs</h2>
+      <input type="text" id="logFilter" placeholder="Filter by email or booth..." style="margin-bottom: 1rem; padding: 0.5rem; width: 100%; max-width: 300px;" />
+<button onclick="exportLogCSV()" class="reset-btn" style="margin-bottom: 1rem;">📄 Export Booth Logs CSV</button>
       <table id="logTable">
         <thead>
           <tr>
@@ -77,6 +79,10 @@
       </table>
     </div>
 
+  <button onclick="exportCheckinCSV()">📄 Export Check-in CSV</button>
+  <button onclick="exportBoothCSV()">📄 Export Booth Logs CSV</button>
+  <button onclick="exportLuckyCSV()">📄 Export Lucky Draw CSV</button>
+    
     <div class="section">
       <h2>Danger Zone</h2>
       <button class="reset-btn" onclick="resetDatabase()">⚠️ Reset Database</button>
@@ -154,11 +160,55 @@
 
   }
 
+  function exportCSV(data, filename, headers, formatter) {
+  let csv = [headers];
+  data.forEach(row => csv.push(formatter(row)));
+  const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportCheckinCSV() {
+  exportCSV(checkinData, "checkin.csv", "\"Email\",\"Timestamp\"", row =>
+    `"${row.email}","${convertToThaiTime(row.timestamp)}"`
+  );
+}
+
+function exportBoothCSV() {
+  exportCSV(boothLogData, "booth-logs.csv", "\"Email\",\"Booth\",\"Timestamp\"", row =>
+    `"${row.email}","${row.booth}","${convertToThaiTime(row.timestamp)}"`
+  );
+}
+
+function exportLuckyCSV() {
+  exportCSV(luckyData, "lucky-draw.csv", "\"Email\"", row =>
+    `"${row.email}"`
+  );
+}
+
   // ✅ โหลดข้อมูลเมื่อเปิดหน้า
   loadLogs();
   loadLucky();
+  loadCheckins(); // ถ้ามี
+
+  // ✅ เพิ่ม filter สำหรับ Booth Logs
+  document.getElementById("logFilter").addEventListener("input", function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#logTable tbody tr");
+    rows.forEach(row => {
+      const email = row.cells[0].innerText.toLowerCase();
+      const booth = row.cells[1].innerText.toLowerCase();
+      row.style.display = email.includes(filter) || booth.includes(filter) ? "" : "none";
+    });
+  });
+
 </script>
 </body>
 
 </html>
+
 
