@@ -72,6 +72,7 @@
           msg += " 🎉 You're eligible for the Lucky Draw!";
         }
         document.getElementById("status").innerText = msg;
+        showToast(msg);
       } else {
         document.getElementById("status").innerText = "❌ Error: " + data.message;
       }
@@ -83,6 +84,7 @@
   </script>
 </body>
 </html>
+
 
 
 
