@@ -48,30 +48,43 @@
     };
 
     function submitBooth() {
-      console.log("Sending:", window.email, window.boothID);
-      
-      fetch("https://booth-api.onrender.com/record", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: window.email, boothID: window.boothID })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "success") {
-            let msg = `✅ Booth "${window.boothID}" recorded. You’ve visited ${data.booths_collected} booth(s).`;
-            if (data.booths_collected >= 2) msg += " 🎉 You're eligible for the Lucky Draw!";
-            document.getElementById("status").innerText = msg;
-          } else {
-            document.getElementById("status").innerText = "❌ Error: " + data.message;
-          }
-        })
-        .catch(() => {
-          document.getElementById("status").innerText = "❌ Failed to connect to server.";
-        });
-    }
+  console.log("Sending:", window.email, window.boothID);
+
+  // ✅ สร้าง timestamp เวลาไทย
+  const timestamp = new Date().toLocaleString('th-TH', {
+    timeZone: 'Asia/Bangkok',
+    hour12: false
+  });
+
+  fetch("https://booth-api.onrender.com/record", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: window.email,
+      boothID: window.boothID,
+      timestamp: timestamp // ✅ ส่ง timestamp ไปด้วย
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        let msg = `✅ Booth "${window.boothID}" recorded at ${timestamp}. You’ve visited ${data.booths_collected} booth(s).`;
+        if (data.booths_collected >= 2) {
+          msg += " 🎉 You're eligible for the Lucky Draw!";
+        }
+        document.getElementById("status").innerText = msg;
+      } else {
+        document.getElementById("status").innerText = "❌ Error: " + data.message;
+      }
+    })
+    .catch(() => {
+      document.getElementById("status").innerText = "❌ Failed to connect to server.";
+    });
+}
   </script>
 </body>
 </html>
+
 
 
 
