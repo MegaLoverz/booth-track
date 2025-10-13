@@ -1,2 +1,72 @@
-<p id="status">Submitting...</p>
-<script src="booth.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booth Check-in</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <img src="unilever-logo.png" alt="Unilever" class="logo" />
+
+    <h1>AI & TECH EXPERIENTIAL BOOTH</h1>
+    <p class="subtitle">Sign-in and visit another booth to participate in the lucky draw!</p>
+
+    <div class="checkin-box">
+      <label for="emailDisplay">Sign In</label>
+      <div class="email-input-group">
+        <input type="text" id="emailDisplay" disabled />
+      </div>
+      <button onclick="submitBooth()">Check In</button>
+    </div>
+
+    <div class="promo">
+      <p class="eligibility">Visit at least two booths to be eligible for a lucky draw!</p>
+      <p class="hurry">⚡ Hurry!! Clock is ticking! ⚡</p>
+    </div>
+
+    <p id="status" style="margin-top: 2rem; font-weight: bold;"></p>
+  </div>
+
+  <script>
+    window.onload = () => {
+      const email = localStorage.getItem("userEmail");
+      const urlParams = new URLSearchParams(window.location.search);
+      const booth = urlParams.get("booth");
+
+      if (!email || !booth) {
+        document.getElementById("status").innerText = "❌ Missing email or booth info.";
+        return;
+      }
+
+      document.getElementById("emailDisplay").value = email;
+
+      // Store booth name for submission
+      window.boothID = booth;
+      window.email = email;
+    };
+
+    function submitBooth() {
+      fetch("https://booth-api.onrender.com/record", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: window.email, boothID: window.boothID })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            let msg = `✅ Booth "${window.boothID}" recorded. You’ve visited ${data.booths_collected} booth(s).`;
+            if (data.booths_collected >= 2) msg += " 🎉 You're eligible for the Lucky Draw!";
+            document.getElementById("status").innerText = msg;
+          } else {
+            document.getElementById("status").innerText = "❌ Error: " + data.message;
+          }
+        })
+        .catch(() => {
+          document.getElementById("status").innerText = "❌ Failed to connect to server.";
+        });
+    }
+  </script>
+</body>
+</html>
