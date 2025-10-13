@@ -34,12 +34,13 @@ body {
 }
 
 .checkin-box {
-  background: white;
+  background: rgba(255, 255, 255, 0.05); /* โปร่งใสเบาๆ */
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  margin-top: 2.5rem; /* เพิ่มช่องไฟด้านบน */
-  margin-bottom: 2rem;
+  max-width: 500px;
+  margin: auto;
+  backdrop-filter: blur(6px); /* ถ้ารองรับ */
 }
 
 .email-input-group {
@@ -143,6 +144,7 @@ button {
 }
 
 }
+
 
 
 
