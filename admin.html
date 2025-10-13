@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #e0e0ff;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .reset-btn {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">Booth Logs & Lucky Draw Eligibility</p>
+
+    <div class="section">
+      <h2>Booth Logs</h2>
+      <table id="logTable">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Booth</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Lucky Draw Eligible</h2>
+      <table id="luckyTable">
+        <thead>
+          <tr>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Danger Zone</h2>
+      <button class="reset-btn" onclick="resetDatabase()">⚠️ Reset Database</button>
+      <p id="resetStatus" style="margin-top: 1rem; font-weight: bold;"></p>
+    </div>
+  </div>
+
+  <script>
+    async function loadLogs() {
+      const res = await fetch("https://booth-api.onrender.com/admin/logs");
+      const data = await res.json();
+      const tbody = document.querySelector("#logTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${row.email}</td><td>${row.booth}</td><td>${row.timestamp}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function loadLucky() {
+      const res = await fetch("https://booth-api.onrender.com/admin/lucky");
+      const data = await res.json();
+      const tbody = document.querySelector("#luckyTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${row.email}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function resetDatabase() {
+      const confirmReset = confirm("Are you sure you want to reset all booth logs and lucky draw data?");
+      if (!confirmReset) return;
+
+      const res = await fetch("https://booth-api.onrender.com/admin/reset", {
+        method: "POST"
+      });
+      const data = await res.json();
+      document.getElementById("resetStatus").innerText = data.message || "Reset complete.";
+      loadLogs();
+      loadLucky();
+    }
+
+    loadLogs();
+    loadLucky();
+  </script>
+</body>
+</html>
