@@ -52,12 +52,13 @@ body {
 }
 
 .email-input-group input {
+  width: 100%;
+  max-width: 400px;
   padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 6px 0 0 6px;
+  background-color: #f0f0ff;
   border: 1px solid #ccc;
-  width: 60%;
-  min-width: 180px;
+  border-radius: 6px;
 }
 
 .email-domain {
@@ -145,6 +146,7 @@ button {
 }
 
 }
+
 
 
 
