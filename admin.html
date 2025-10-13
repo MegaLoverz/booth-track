@@ -93,13 +93,17 @@ let boothLogData = [];
 let luckyData = [];
 <script>
   // ✅ ฟังก์ชันแปลง timestamp จาก UTC → เวลาไทย
-  function convertToThaiTime(utcString) {
-    const date = new Date(utcString);
-    return date.toLocaleString('th-TH', {
-      timeZone: 'Asia/Bangkok',
-      hour12: false
-    });
-  }
+function convertToThaiTime(raw) {
+  // ลองแปลง timestamp ด้วย Date.parse()
+  const parsed = Date.parse(raw);
+  if (isNaN(parsed)) return raw; // ถ้าแปลงไม่ได้ ให้แสดง raw ไปเลย
+
+  const date = new Date(parsed);
+  return date.toLocaleString('th-TH', {
+    timeZone: 'Asia/Bangkok',
+    hour12: false
+  });
+}
 
   async function loadCheckins() {
   const res = await fetch("https://booth-api.onrender.com/admin/checkins");
@@ -213,6 +217,7 @@ function exportLuckyCSV() {
 </body>
 
 </html>
+
 
 
 
