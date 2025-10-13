@@ -46,7 +46,7 @@
       window.email = email;
     };
 
-    function submitBooth() {
+   async function submitBooth() {
   console.log("Sending:", window.email, window.boothID);
 
   // ✅ สร้าง timestamp เวลาไทย
@@ -91,8 +91,25 @@
     });
 }
   </script>
+  
+<div id="toast" style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+background:#2b2b8f; color:white; padding:1rem 1.5rem; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.2); z-index:999;">
+</div>
+
+<script>
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3000);
+  }
+</script>
+  
 </body>
 </html>
+
 
 
 
