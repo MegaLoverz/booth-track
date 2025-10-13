@@ -71,46 +71,64 @@
     </div>
   </div>
 
-  <script>
-    async function loadLogs() {
-      const res = await fetch("https://booth-api.onrender.com/admin/logs");
-      const data = await res.json();
-      const tbody = document.querySelector("#logTable tbody");
-      tbody.innerHTML = "";
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${row.email}</td><td>${row.booth}</td><td>${row.timestamp}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
+<script>
+  // ✅ ฟังก์ชันแปลง timestamp จาก UTC → เวลาไทย
+  function convertToThaiTime(utcString) {
+    const date = new Date(utcString);
+    return date.toLocaleString('th-TH', {
+      timeZone: 'Asia/Bangkok',
+      hour12: false
+    });
+  }
 
-    async function loadLucky() {
-      const res = await fetch("https://booth-api.onrender.com/admin/lucky");
-      const data = await res.json();
-      const tbody = document.querySelector("#luckyTable tbody");
-      tbody.innerHTML = "";
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${row.email}</td>`;
-        tbody.appendChild(tr);
-      });
-    }
+  async function loadLogs() {
+    const res = await fetch("https://booth-api.onrender.com/admin/logs");
+    const data = await res.json();
+    const tbody = document.querySelector("#logTable tbody");
+    tbody.innerHTML = "";
 
-    async function resetDatabase() {
-      const confirmReset = confirm("Are you sure you want to reset all booth logs and lucky draw data?");
-      if (!confirmReset) return;
+    data.forEach(row => {
+      const thaiTime = convertToThaiTime(row.timestamp);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.email}</td>
+        <td>${row.booth}</td>
+        <td>${thaiTime}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
 
-      const res = await fetch("https://booth-api.onrender.com/admin/reset", {
-        method: "POST"
-      });
-      const data = await res.json();
-      document.getElementById("resetStatus").innerText = data.message || "Reset complete.";
-      loadLogs();
-      loadLucky();
-    }
+  async function loadLucky() {
+    const res = await fetch("https://booth-api.onrender.com/admin/lucky");
+    const data = await res.json();
+    const tbody = document.querySelector("#luckyTable tbody");
+    tbody.innerHTML = "";
 
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${row.email}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  async function resetDatabase() {
+    const confirmReset = confirm("Are you sure you want to reset all booth logs and lucky draw data?");
+    if (!confirmReset) return;
+
+    const res = await fetch("https://booth-api.onrender.com/admin/reset", {
+      method: "POST"
+    });
+    const data = await res.json();
+    document.getElementById("resetStatus").innerText = data.message || "Reset complete.";
     loadLogs();
     loadLucky();
-  </script>
+  }
+
+  // ✅ โหลดข้อมูลเมื่อเปิดหน้า
+  loadLogs();
+  loadLucky();
+</script>
 </body>
+
 </html>
