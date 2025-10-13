@@ -30,63 +30,56 @@
     </div>
   </div>
 
-  <script>
-    function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.innerText = message;
-  toast.style.display = "block";
-  setTimeout(() => {
-    toast.style.display = "none";
-  }, 3000);
-}
-    function saveEmail() {
-  const prefix = document.getElementById("emailPrefix").value.trim();
-  const email = prefix + "@unilever.com";
-  localStorage.setItem("userEmail", email);
-      
-  // ✅ สร้าง timestamp เวลาไทย
-  const timestamp = new Date().toLocaleString('th-TH', {
-    timeZone: 'Asia/Bangkok',
-    hour12: false
-  });
-        // ✅ ตรวจว่าเคย check-in แล้วหรือยัง
-  const check = await fetch(`https://booth-api.onrender.com/checkin/status?email=${email}`);
-  const result = await check.json();
-
-  if (result.exists) {
-    showToast("⚠️ This email has already checked in.");
-    return;
-  }
-
-
-  // ✅ ส่งข้อมูลไปยัง backend
-  fetch("https://booth-api.onrender.com/checkin", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, timestamp })
-  })
-  .then(res => res.json())
-  .then(data => {
-    showToast("✅ Check-in successful! You can now scan booth QR codes.");
-  })
-  .catch(() => {
-    showToast("❌ Failed to record check-in.");
-  });
-      
-}
-  </script>
-  
   <div id="toast" style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
   background:#2b2b8f; color:white; padding:1rem 1.5rem; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.2); z-index:999;">
-</div>
-  
+  </div>
+
+  <script>
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
+
+    async function saveEmail() {
+      const prefix = document.getElementById("emailPrefix").value.trim();
+      if (!prefix || prefix.length < 3) {
+        showToast("❌ Please enter a valid Unilever ID.");
+        return;
+      }
+
+      const email = prefix + "@unilever.com";
+      localStorage.setItem("userEmail", email);
+
+      // ✅ ตรวจว่าเคย check-in แล้วหรือยัง
+      try {
+        const check = await fetch(`https://booth-api.onrender.com/checkin/status?email=${email}`);
+        const result = await check.json();
+
+        if (result.exists) {
+          showToast("⚠️ This email has already checked in.");
+          return;
+        }
+
+        // ✅ สร้าง timestamp แบบ ISO
+        const timestamp = new Date().toISOString();
+
+        // ✅ ส่งข้อมูลไปยัง backend
+        const res = await fetch("https://booth-api.onrender.com/checkin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, timestamp })
+        });
+
+        const data = await res.json();
+        showToast("✅ Check-in successful! You can now scan booth QR codes.");
+      } catch (err) {
+        showToast("❌ Failed to record check-in.");
+      }
+    }
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
