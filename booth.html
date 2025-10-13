@@ -48,6 +48,8 @@
     };
 
     function submitBooth() {
+      console.log("Sending:", window.email, window.boothID);
+      
       fetch("https://booth-api.onrender.com/record", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -70,3 +72,4 @@
   </script>
 </body>
 </html>
+
