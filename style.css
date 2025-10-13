@@ -88,6 +88,18 @@ button {
   color: #2b2b8f;
   margin-top: 1rem;
 }
+.booth-title {
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      font-weight: bold;
+      background: linear-gradient(to right, #2b2b8f, #9900cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+.spacer {
+      height: 2rem;
+    }
 
 @media (max-width: 480px) {
   .logo {
@@ -131,6 +143,7 @@ button {
 }
 
 }
+
 
 
 
