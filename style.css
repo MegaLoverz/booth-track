@@ -18,17 +18,17 @@ body {
   margin-top: -20px;
 }
 
-h1 {
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-  background: linear-gradient(to right, #2b2b8f, #9900cc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1.5rem; /* เพิ่มช่องไฟด้านล่าง */
-  line-height: 1.2;
-  word-break: keep-all;
-  text-wrap: balance;
-  max-width: 100%;
-  padding: 0 1rem;
+.main-title {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .main-title span {
+    display: inline;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
 }
 
 .checkin-box {
@@ -113,19 +113,23 @@ button {
   white-space: nowrap;
 }
 
-  h1 {
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  .main-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.main-title span {
+  display: block;
+  font-weight: bold;
   background: linear-gradient(to right, #2b2b8f, #9900cc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 2rem;
-  line-height: 1.3;
-  word-break: break-word;
-  padding: 0 1rem;
-  max-width: 100%;
-  display: inline-block;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
 }
+
 }
+
 
 
 
