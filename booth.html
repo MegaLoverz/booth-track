@@ -32,6 +32,8 @@
       const email = localStorage.getItem("userEmail");
       const urlParams = new URLSearchParams(window.location.search);
       const booth = urlParams.get("booth") || "Booth";
+      document.getElementById("boothName").innerText = booth;
+
 
       if (!email || !booth) {
         document.getElementById("status").innerText = "❌ Missing email or booth info.";
@@ -70,5 +72,6 @@
   </script>
 </body>
 </html>
+
 
 
