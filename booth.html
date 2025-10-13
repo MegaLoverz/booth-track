@@ -55,6 +55,16 @@
     hour12: false
   });
 
+  // ✅ ตรวจว่าเคย stamp booth นี้แล้วหรือยัง
+  const check = await fetch(`https://booth-api.onrender.com/booth/status?email=${email}&booth=${boothID}`);
+  const result = await check.json();
+
+  if (result.exists) {
+    showToast("⚠️ This email has already been stamped for this booth.");
+    return;
+  }
+
+      
   fetch("https://booth-api.onrender.com/record", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -83,6 +93,7 @@
   </script>
 </body>
 </html>
+
 
 
 
