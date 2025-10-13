@@ -27,20 +27,21 @@ body {
 .main-title span {
   display: block;
   font-weight: bold;
-  background: linear-gradient(to right, #2b2b8f, #9900cc);
+  background: linear-gradient(to right, #00bfff, #6a5acd, #2b2b8f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: clamp(1.6rem, 5vw, 2.2rem);
 }
 
 .checkin-box {
-  background: rgba(255, 255, 255, 0.05); /* โปร่งใสเบาๆ */
+  background: rgba(255, 255, 255, 0.05); /* โปร่งใสเบา ๆ */
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1.5rem;
   border-radius: 12px;
   max-width: 500px;
   margin: auto;
-  backdrop-filter: blur(6px); /* ถ้ารองรับ */
+  backdrop-filter: blur(8px); /* ✅ ทำให้ดูฟุ้งแบบกระจก */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* ✅ เงาแบบลอย */
 }
 
 .email-input-group {
@@ -92,7 +93,7 @@ button {
 .booth-title {
       font-size: clamp(1.8rem, 5vw, 2.4rem);
       font-weight: bold;
-      background: linear-gradient(to right, #2b2b8f, #9900cc);
+      background: linear-gradient(to right, #00bfff, #6a5acd, #2b2b8f);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-align: center;
@@ -144,6 +145,7 @@ button {
 }
 
 }
+
 
 
 
