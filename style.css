@@ -98,7 +98,7 @@ button {
       margin-bottom: 2rem;
     }
 .spacer {
-      height: 0.5rem;
+      height: 0.2rem;
     }
 
 @media (max-width: 480px) {
@@ -143,6 +143,7 @@ button {
 }
 
 }
+
 
 
 
